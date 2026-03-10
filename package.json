@@ -1,11 +1,34 @@
 {
   "name": "jzarr_erp_backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "start:dev": "set NODE_ENV=development && nodemon -r module-alias/register ./src/server.js",
+    "start:prod": "set NODE_ENV=production && node ./src/server.js"
+  },
+  "_moduleAliases": {
+    "@controllers": "./src/api/v1/controllers",
+    "@routes": "./src/api/v1/routes",
+    "@lib": "./src/lib",
+    "@middlewares": "./src/api/v1/middleware",
+    "@config": "./src/config"
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@prisma/adapter-mariadb": "^7.4.2",
+    "@prisma/client": "^7.4.2",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-winston": "^4.2.0",
+    "module-alias": "^2.3.4",
+    "prisma": "^7.4.2",
+    "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.1"
+  }
 }

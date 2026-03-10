@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/api/v1/*"],
+      "@routes/*": ["src/routes/*"],
+      "@config/*": ["src/config/*"],
+      "@constant/*": ["src/constant/*"],
+      "@lib/*": ["src/lib/*"]
+    }
+  }
+}
