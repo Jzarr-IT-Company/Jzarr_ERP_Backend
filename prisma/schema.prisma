@@ -6,78 +6,63 @@ datasource db {
   provider = "mysql"
 }
 
-enum Role {
+enum ENUM_ROLE {
   SUPER_ADMIN
   SUB_ADMIN
   MANAGER
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String    @unique
+  password    String
+  role        ENUM_ROLE
+  createdById Int?
 
-  role Role
+  createdBy    User?  @relation("UserCreator", fields: [createdById], references: [id])
+  createdUsers User[] @relation("UserCreator")
 
-  createdBy Int?
-  creator   User?  @relation("UserCreator", fields: [createdBy], references: [id])
-  managers  User[] @relation("UserCreator")
+  contracts Contract[]
 
-  logs ActivityLog[]
+  createdAt               DateTime                 @default(now())
+  updatedAt DateTime  @updatedAt
+  contractEditPermissions ContractEditPermission[]
+}
 
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
-  contracts         Contract[]
-  contractRevisions ContractRevision[]
-  grantedContracts  Contract[]         @relation("GrantedBy")
+enum ApprovalStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
 
 model Contract {
-  id          Int     @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   title       String
-  description String?
+  description String
+  managerId   Int
 
-  managerId Int
-  manager   User @relation(fields: [managerId], references: [id])
+  subAdminStatus   ApprovalStatus @default(PENDING)
+  superAdminStatus ApprovalStatus @default(PENDING)
 
-  editGranted Boolean @default(false)
-
-  grantedById Int?
-  grantedBy   User? @relation(fields: [grantedById], references: [id], name: "GrantedBy")
-
-  grantedAt DateTime?
-
-  revisions ContractRevision[]
+  manager User @relation(fields: [managerId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  editPermissions ContractEditPermission[]
 }
 
-model ContractRevision {
-  id Int @id @default(autoincrement())
-
+model ContractEditPermission {
+  id         Int @id @default(autoincrement())
   contractId Int
-  contract   Contract @relation(fields: [contractId], references: [id])
+  managerId  Int
 
-  changedById Int
-  changedBy   User @relation(fields: [changedById], references: [id])
+  expiresAt DateTime
 
-  oldData Json
-  newData Json
-
-  createdAt DateTime @default(now())
-}
-
-model ActivityLog {
-  id Int @id @default(autoincrement())
-
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
-
-  action   String
-  entity   String
-  entityId Int?
+  contract Contract @relation(fields: [contractId], references: [id])
+  manager  User     @relation(fields: [managerId], references: [id])
 
   createdAt DateTime @default(now())
+    updatedAt DateTime  @updatedAt
 }

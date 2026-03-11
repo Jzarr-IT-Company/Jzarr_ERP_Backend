@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "./src/server.js",
   "scripts": {
-    "start": "node src/server.js",
+    "seeding": "node -r module-alias/register  script/seedRunner.js",
+    "start": " node  src/server.js",
     "start:dev": "set NODE_ENV=development && nodemon -r module-alias/register ./src/server.js",
     "start:prod": "set NODE_ENV=production && node ./src/server.js"
   },
@@ -12,7 +13,9 @@
     "@routes": "./src/api/v1/routes",
     "@lib": "./src/lib",
     "@middlewares": "./src/api/v1/middleware",
-    "@config": "./src/config"
+    "@config": "./src/config",
+    "@services": "./src/api/v1/services",
+    "@utils": "./src/utils"
   },
   "author": "",
   "license": "ISC",
@@ -20,9 +23,12 @@
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.4.2",
     "@prisma/client": "^7.4.2",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "express-winston": "^4.2.0",
+    "jsonwebtoken": "^9.0.3",
     "module-alias": "^2.3.4",
     "prisma": "^7.4.2",
     "winston": "^3.19.0"

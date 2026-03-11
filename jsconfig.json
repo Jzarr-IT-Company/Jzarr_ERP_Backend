@@ -6,7 +6,9 @@
       "@routes/*": ["src/routes/*"],
       "@config/*": ["src/config/*"],
       "@constant/*": ["src/constant/*"],
-      "@lib/*": ["src/lib/*"]
+      "@lib/*": ["src/lib/*"],
+      "@services/*": ["src/api/v1/services/*"],
+      "@utlls/*": ["src/utils/*"]
     }
   }
 }
