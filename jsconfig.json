@@ -8,7 +8,8 @@
       "@constant/*": ["src/constant/*"],
       "@lib/*": ["src/lib/*"],
       "@services/*": ["src/api/v1/services/*"],
-      "@utlls/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@middleware/*":["src/api/v1/middleware/*"]
     }
   }
 }

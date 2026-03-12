@@ -1,30 +1,15 @@
 const prisma = require("@lib/prisma.js")
+const { hash_password } = require("@utils/helper")
 
 async function seedUsers() {
-
+  const hashPassword=await hash_password("123456")
   await prisma.user.createMany({
-    data: [
-      {
+    data:{
         name: "Super Admin",
         email: "super@erp.com",
-        password: "123456",
+        password: hashPassword,
         role: "SUPER_ADMIN"
-      },
-      {
-        name: "Sub Admin",
-        email: "sub@erp.com",
-        password: "123456",
-        role: "SUB_ADMIN",
-        createdById: 1
-      },
-      {
-        name: "Manager 1",
-        email: "manager1@erp.com",
-        password: "123456",
-        role: "MANAGER",
-        createdById: 2
-      }
-    ]
+    }
   })
 
   console.log("Users seeded successfully")

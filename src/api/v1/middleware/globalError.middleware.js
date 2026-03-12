@@ -1,4 +1,4 @@
-const Responses=require("@constant/responses")
+const Responses=require("../../../constant/responses")
 
 const responses=new Responses()
 
