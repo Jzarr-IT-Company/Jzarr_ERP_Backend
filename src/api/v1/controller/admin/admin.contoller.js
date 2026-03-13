@@ -1,6 +1,6 @@
-const prisma = require('@lib/prisma');
+const {prisma,handle_prisma_error }= require('@lib/prisma');
 const Responses = require('@constant/responses');
-const { hash_password, pagination } = require('@utlls/helper');
+const { hash_password, pagination } = require('@utils/helper');
 const responses = new Responses();
 
 class Admin_SubAdmin_Controller {
@@ -23,11 +23,20 @@ class Admin_SubAdmin_Controller {
       return res.json(responses.create_success_response(user));
     } catch (error) {
       console.log(error);
+       handle_prisma_error(error)
       next(error);
     }
   };
 
-  admin_update_user = async (req, res, next) => {};
+  admin_update_user = async (req, res, next) => {
+    try {
+      const { password, name } = req.body;
+    } catch (error) {
+      console.log(error);
+       handle_prisma_error(error)
+      next(error);
+    }
+  };
   admin_delete_user = async (req, res, next) => {
     try {
       const { userId } = req.body;
@@ -37,45 +46,55 @@ class Admin_SubAdmin_Controller {
           id: parseInt(userId),
         },
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+       handle_prisma_error(error)
+      next(error);
+    }
   };
   admin_get_all_user = async (req, res, next) => {
     try {
       const userId = req.user.id;
+      const userRole = req.user.role;
       const { skip, limit, page } = await pagination(req);
+
+      let whereFilter = {
+        NOT: { id: userId },
+      };
+
+      if (userRole === 'SUB_ADMIN') {
+        whereFilter.role = 'MANAGER';
+      }
+
       const [users, total] = await Promise.all([
-        await prisma.user.findMany({
-          where: {
-            NOT: {
-              id: userId,
-            },
-          },
-          skip: skip,
+        prisma.user.findMany({
+          where: whereFilter,
+          skip,
           take: limit,
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
+          orderBy: { createdAt: 'desc' },
+          select: { id: true, name: true, email: true, role: true },
         }),
-        await prisma.user.count({
-          where: {
-            NOT: {
-              id: userId,
-            },
-          },
-        }),
+        prisma.user.count({ where: whereFilter }),
       ]);
-      res.json(
+
+      return res.json(
         responses.ok_response({
           users,
-          totalPage: Math.ceil(total / limit),
-          hasNext: page < Math.ceil(total / limit),
+          meta: {
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit),
+            hasNext: page < Math.ceil(total / limit),
+          },
         })
       );
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      handle_prisma_error(error)
       next(error);
     }
   };
 }
+
+module.exports = Admin_SubAdmin_Controller;

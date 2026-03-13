@@ -33,3 +33,5 @@
 [2026-03-12 17:11:57] [32minfo[39m : [90mPOST /api/v1/auth/login[39m [32m200[39m [90m335ms[39m
 [2026-03-12 17:14:36] [32minfo[39m : [90mPOST /api/v1/auth/login[39m [32m200[39m [90m315ms[39m
 [2026-03-12 17:14:56] [32minfo[39m : [90mPOST /api/v1/auth/login[39m [32m200[39m [90m125ms[39m
+[2026-03-12 17:20:59] [32minfo[39m : [90mPOST /api/v1/auth/login[39m [32m200[39m [90m502ms[39m
+[2026-03-12 17:21:17] [32minfo[39m : [90mPOST /api/v1/auth/login[39m [32m200[39m [90m165ms[39m

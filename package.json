@@ -9,14 +9,14 @@
     "start:prod": "set NODE_ENV=production && node ./src/server.js"
   },
   "_moduleAliases": {
-    "@controllers": "./src/api/v1/controllers",
+    "@controller": "./src/api/v1/controller",
     "@routes": "./src/api/v1/routes",
     "@lib": "./src/lib",
-    "@middlewares": "./src/api/v1/middleware",
+    "@middleware": "./src/api/v1/middleware",
     "@config": "./src/config",
     "@services": "./src/api/v1/services",
     "@utils": "./src/utils",
-    "@constant":"./src/constant"
+    "@constant": "./src/constant"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +29,7 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "express-winston": "^4.2.0",
+    "joi": "^18.0.2",
     "jsonwebtoken": "^9.0.3",
     "module-alias": "^2.3.4",
     "prisma": "^7.4.2",

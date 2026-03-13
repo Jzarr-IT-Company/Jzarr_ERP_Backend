@@ -1,5 +1,5 @@
 const prisma = require('@lib/prisma');
-const { decoded_token } = require('@utlls/helper');
+const { decoded_token } = require('@utils/helper');
 const jwt = require('jsonwebtoken');
 const UserService = require('@services/user.service');
 const user_service = new UserService();
@@ -26,8 +26,8 @@ const Authenticated = async (req, res, next) => {
     if (!user) {
       return res.json(responses.unauthorized_error('Un-Authorized'));
     }
-    req.user = decoded;
-
+    req.user = user;
+    
     next();
   } catch (error) {
     return res.status(401).json({

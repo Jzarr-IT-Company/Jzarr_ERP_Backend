@@ -9,7 +9,8 @@
       "@lib/*": ["src/lib/*"],
       "@services/*": ["src/api/v1/services/*"],
       "@utils/*": ["src/utils/*"],
-      "@middleware/*":["src/api/v1/middleware/*"]
+      "@middleware/*":["src/api/v1/middleware/*"],
+      "@controller/*":["src/api/v1/controller/*"]
     }
   }
 }

@@ -35,6 +35,25 @@ class AuthController {
       next(error);
     }
   };
+  // change_password=async(req,res,next){
+  //   try {
+  //     const userId=req.user.id;
+
+
+
+  //     const {current_password,new_password}=req.body;
+  //     await prisma.user.update({
+  //       where:{
+  //         id:userId,
+  //       },
+  //       data:{
+          
+  //       }
+  //     })
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 }
 
 
