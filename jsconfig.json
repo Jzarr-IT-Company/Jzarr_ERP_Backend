@@ -10,7 +10,8 @@
       "@services/*": ["src/api/v1/services/*"],
       "@utils/*": ["src/utils/*"],
       "@middleware/*":["src/api/v1/middleware/*"],
-      "@controller/*":["src/api/v1/controller/*"]
+      "@controller/*":["src/api/v1/controller/*"],
+      "@validator/*":["src/api/v1/validator/*"]
     }
   }
 }

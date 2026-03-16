@@ -6,7 +6,8 @@ const responses = new Responses();
 class Admin_SubAdmin_Controller {
   admin_create_users = async (req, res, next) => {
     try {
-      const userId = req.user;
+      const userId = req.user.id;
+      console.log(userId,"userId")
       const { name, email, password, role } = req.body;
 
       const hashpassword = await hash_password(password);
@@ -16,7 +17,7 @@ class Admin_SubAdmin_Controller {
           email,
           password: hashpassword,
           role,
-          createdBy: userId,
+          createdById: userId,
         },
       });
 
@@ -40,12 +41,13 @@ class Admin_SubAdmin_Controller {
   admin_delete_user = async (req, res, next) => {
     try {
       const { userId } = req.body;
-
+      console.log("userId ",userId)
       await prisma.user.delete({
         where: {
           id: parseInt(userId),
         },
       });
+      return res.status(200).json(responses.ok_response(null,"user deleted successfully"))
     } catch (error) {
       console.log(error);
        handle_prisma_error(error)

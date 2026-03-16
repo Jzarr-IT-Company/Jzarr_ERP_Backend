@@ -1,4 +1,4 @@
-const prisma = require('@lib/prisma');
+const{ prisma} = require('@lib/prisma');
 const UserService = require('@services/user.service');
 const user_services = new UserService();
 const Responses = require('@constant/responses');

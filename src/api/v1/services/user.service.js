@@ -1,10 +1,11 @@
-const prisma = require('@lib/prisma');
+const{ prisma} = require('@lib/prisma');
 
 class UserService {
   find_user_by_email = async (email) => {
+    console.log("emailing",email)
     return await prisma.user.findUnique({
       where: {
-        email,
+        email
       },
     });
   };

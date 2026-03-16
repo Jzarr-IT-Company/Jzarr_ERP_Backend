@@ -9,7 +9,8 @@ const Authenticated = async (req, res, next) => {
   try {
     const authHeader = req.headers['authorization'];
 
-    if (!authHeader || !authHeader.startsWith('Bearer')) {
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({
         message: 'Authorization header missing',
       });
@@ -27,12 +28,23 @@ const Authenticated = async (req, res, next) => {
       return res.json(responses.unauthorized_error('Un-Authorized'));
     }
     req.user = user;
-    
+
     next();
   } catch (error) {
-    return res.status(401).json({
-      message: 'Invalid or expired token',
-    });
+      if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json(
+        responses.unauthorized_error('Invalid token')
+      );
+    }
+    
+    if (error instanceof jwt.TokenExpiredError) {
+      return res.status(401).json(
+        responses.unauthorized_error('Token has expired')
+      );
+    }
+
+    console.log("error in auth middleware :: ", error.message);
+    next(error);
   }
 };
 

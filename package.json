@@ -16,7 +16,8 @@
     "@config": "./src/config",
     "@services": "./src/api/v1/services",
     "@utils": "./src/utils",
-    "@constant": "./src/constant"
+    "@constant": "./src/constant",
+    "@validator":"./src/api/v1/validator"
   },
   "author": "",
   "license": "ISC",
